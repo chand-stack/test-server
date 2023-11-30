@@ -11,7 +11,31 @@ const getBannerService = async () => {
   return getBanner;
 };
 
+const deleteBannerService = async (id) => {
+  const deleteBanner = await BannerModel.deleteOne({ _id: id });
+  return deleteBanner;
+};
+
+const selectBannerService = async (id, data) => {
+  const selectedBanner = await BannerModel.findByIdAndUpdate(id, data, {
+    new: true,
+  });
+  return selectedBanner;
+};
+
+const unselectBannerService = async (ids, data) => {
+  const unselectBanner = await BannerModel.updateMany(
+    { _id: { $in: ids.Ids } },
+    data,
+    { new: true }
+  );
+  return unselectBanner;
+};
+
 module.exports = {
   createBannerService,
   getBannerService,
+  deleteBannerService,
+  selectBannerService,
+  unselectBannerService,
 };

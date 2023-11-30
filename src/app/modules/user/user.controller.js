@@ -4,6 +4,8 @@ const {
   getAllUserService,
   makeAdminService,
   getSingleUserService,
+  makeUserAdminService,
+  getAdminUserService,
 } = require("./user.service");
 
 const createUserController = async (req, res) => {
@@ -26,7 +28,11 @@ const createUserController = async (req, res) => {
 
 const getAllUserController = async (req, res) => {
   try {
-    const getAllUser = await getAllUserService();
+    const filter = req.query;
+    const query = {
+      email: { $regex: filter.search, $options: "i" },
+    };
+    const getAllUser = await getAllUserService(query);
     res.status(201).json({
       status: "success",
       message: "successfully get data",
@@ -60,6 +66,25 @@ const makeAdminController = async (req, res) => {
     });
   }
 };
+const makeUserAdminController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    // console.log(id, data);
+    const makeAdmin = await makeUserAdminService(id, data);
+    res.status(201).json({
+      status: "success",
+      message: "successfully make admin",
+      data: makeAdmin,
+    });
+  } catch (error) {
+    res.status(501).json({
+      status: "error",
+      message: "something went wrong",
+      data: error,
+    });
+  }
+};
 
 const getSingleUserController = async (req, res) => {
   try {
@@ -78,9 +103,29 @@ const getSingleUserController = async (req, res) => {
     });
   }
 };
+
+const adminUserController = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await getAdminUserService(email);
+    res.status(201).json({
+      status: "success",
+      message: "successfully get admin",
+      data: user,
+    });
+  } catch (error) {
+    res.status(501).json({
+      status: "error",
+      message: "something went wrong",
+      data: error,
+    });
+  }
+};
 module.exports = {
   createUserController,
   getAllUserController,
   makeAdminController,
   getSingleUserController,
+  makeUserAdminController,
+  adminUserController,
 };

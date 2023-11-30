@@ -4,7 +4,25 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/app.js",
+        "use": "@now/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "src/app.js"
+      }
+    ],
+    "env": {
+      "DB_URI": "mongodb://diagnostic:KqphM5Xg0YhfYSeC@ac-wlwgtvd-shard-00-00.svtmaib.mongodb.net:27017,ac-wlwgtvd-shard-00-01.svtmaib.mongodb.net:27017,ac-wlwgtvd-shard-00-02.svtmaib.mongodb.net:27017/diagnostic-server?ssl=true&replicaSet=atlas-7847a9-shard-0&authSource=admin&retryWrites=true&w=majority",
+      "PAYMENT_SECRET_KEY": "sk_test_51OEUvyJwPZptUGAMLzhwrPzWdYLJC0t8eu1dy1KjkMCtYHuXTjulrNzd3uCDpZFH0iJz1RXFOyJKyJpbvFzzKNP500uFmNeW4I",
+      "TOKEN_ACCESS_SECRET": "53d56f0cc60761e26a3ab7cc968a5b7c81be13f0fbf0a31c51737003449445601bc9009faad085ca54c52dce59d71820b550c822cc3ef0b8a05c7e101cca14ff"
+    }
   },
   "keywords": [],
   "author": "",
@@ -13,6 +31,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^8.0.1"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.1",
+    "stripe": "^14.5.0"
   }
 }

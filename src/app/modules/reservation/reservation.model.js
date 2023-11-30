@@ -1,12 +1,8 @@
 const { Schema, model } = require("mongoose");
 
 // Define the schema
-const serviceSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  image: {
+const reservationSchema = new Schema({
+  testName: {
     type: String,
     required: true,
   },
@@ -14,8 +10,12 @@ const serviceSchema = new Schema({
     type: String,
     required: true,
   },
-  slot: {
-    type: Number,
+  email: {
+    type: String,
+    required: true,
+  },
+  transactionId: {
+    type: String,
     required: true,
   },
   price: {
@@ -26,14 +26,18 @@ const serviceSchema = new Schema({
     type: String,
     required: true,
   },
-  booking: {
-    type: Number,
+  status: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
     required: true,
   },
 });
 
 // Create a model based on the schema
-const ServiceModel = model("Service", serviceSchema);
+const ReservationModel = model("Reservation", reservationSchema);
 
 // Export the model
-module.exports = ServiceModel;
+module.exports = ReservationModel;
